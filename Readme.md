@@ -2,13 +2,13 @@
 ## GyroScope, Touch Controller
 * Added the touch_event into the last days' work
 ###About the `GUILayout` informations
-* rotationRate is currently in radians/seconds, return float is in high enough resolution but didn't print out
-* currentRotation refers to the calculation results, can be a reference, `quaterion` is easy to get inside the Unity, but didn't print out here
+* **rotationRate** is currently in radians/seconds, return float is in high enough resolution but didn't print out
+* **currentRotation** refers to the calculation results, can be a reference, `quaterion` is easy to get inside the Unity, but didn't print out here
 * touch events includes
   * Multitouch support, the index refers to `touch[n]` in unity
   * Positon refers to the (x,y) in screen space, left-down corner = (0,0), absolutely based on screen pixel
   * The printed states are the enums of `touchPhase` provided by Unity, with five states as: `Began`, `Moved`, `Stationary`, `Ended`, `Canceled`, details can be found in the link [here](https://docs.unity3d.com/ScriptReference/TouchPhase.html)
-  ![alt text](example.png "example")
+  <img src ="example.png" width = "400">
 
 
 ## 2018/04/03
