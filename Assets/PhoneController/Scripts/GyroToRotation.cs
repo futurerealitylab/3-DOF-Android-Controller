@@ -4,7 +4,7 @@ public class GyroToRotation: MonoBehaviour
 {
     public GameObject rotationIndicater;
     Vector3 rotationRate = new Vector3(0, 0, 0);
- 
+    string frameTouchMessage = "";
     private void Start()
     {
         resetGyro();
@@ -23,14 +23,16 @@ public class GyroToRotation: MonoBehaviour
             rotationRate.z = rz;
             rotationIndicater.transform.Rotate(rotationRate);
         }
+        frameTouchMessage = touchInFrames();
+        Debug.Log(frameTouchMessage);
     }
 
     protected void OnGUI()
     {
-        GUI.skin.label.fontSize = Screen.width / 40;
-       GUILayout.Label("rotationRate: " + Input.gyro.rotationRate);
+        GUI.skin.label.fontSize = Screen.width / 20;
+        GUILayout.Label("rotationRate: " + Input.gyro.rotationRate);
         GUILayout.Label("currentOrientation: " + rotationIndicater.transform.rotation.eulerAngles);
-
+        GUILayout.Label("touchInFrame: " + frameTouchMessage);
      }
 
     public void enableGyro(bool isOn)
@@ -41,5 +43,27 @@ public class GyroToRotation: MonoBehaviour
     public void resetGyro()
     {
         rotationIndicater.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    public string touchInFrames()
+    {
+        string touchMessage = "";
+        if (Input.touchCount > 0)
+        {
+            int fingerCount = 0;
+            foreach (Touch touch in Input.touches)
+            {
+                
+                touchMessage += "Index of touch in frame: ";
+                touchMessage += fingerCount;
+                touchMessage += ", position: ";
+                touchMessage += touch.position;
+                touchMessage += ", statues: ";
+                touchMessage += touch.phase;
+                touchMessage += "\n";
+                fingerCount++;
+            }
+        }
+        return touchMessage;
     }
 }
