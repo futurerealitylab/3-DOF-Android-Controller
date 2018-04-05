@@ -4,6 +4,11 @@ public class GyroToRotation: MonoBehaviour
 {
     public GameObject rotationIndicater;
     Vector3 rotationRate = new Vector3(0, 0, 0);
+    public UnityEngine.Vector3 RotationRate
+    {
+        get { return rotationRate; }
+        set { rotationRate = value; }
+    }
     string frameTouchMessage = "";
     private void Start()
     {
@@ -21,10 +26,10 @@ public class GyroToRotation: MonoBehaviour
             rotationRate.x = rx;
             rotationRate.y = ry;
             rotationRate.z = rz;
-            rotationIndicater.transform.Rotate(rotationRate);
+            rotationIndicater.transform.Rotate(RotationRate);
         }
         frameTouchMessage = touchInFrames();
-        Debug.Log(frameTouchMessage);
+        //Debug.Log(frameTouchMessage);
     }
 
     protected void OnGUI()
@@ -60,6 +65,8 @@ public class GyroToRotation: MonoBehaviour
                 touchMessage += touch.position;
                 touchMessage += ", statues: ";
                 touchMessage += touch.phase;
+                touchMessage += (float)Screen.width;
+                touchMessage += (float)Screen.height;
                 touchMessage += "\n";
                 fingerCount++;
             }
