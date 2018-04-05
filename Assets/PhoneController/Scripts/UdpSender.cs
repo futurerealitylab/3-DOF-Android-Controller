@@ -90,9 +90,9 @@ public class UdpSender : MonoBehaviour {
 
 
         // Sends a message to the host to which you have connected.
-        Vector2 touchpos = Input.touchCount > 0 ? Input.touches[0] : new Vector2(0, 0);
-        int state = Input.touchCount > 0 ? (Input.touch[0].phase - TouchPhase.Began + 1) : 0;
-        encodePacket(gtr.RotationRate, touchpos, state);
+        Vector2 touchpos = Input.touchCount > 0 ? Input.touches[0].position : new Vector2(0, 0);
+        int state = Input.touchCount > 0 ? (Input.touches[0].phase - TouchPhase.Began + 1) : 0;
+        Byte[] packet = encodePacket(gtr.RotationRate, touchpos, state);
         udpClient.Send(packet, packet.Length);
 
         //receivePackets();

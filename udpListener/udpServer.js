@@ -1,20 +1,20 @@
 const dgram = require('dgram');
-const server = dgram.createSocket('udp4');
+const udpServer = dgram.createSocket('udp4');
 
-server.on('error', (err) => {
-  console.log(`server error:\n${err.stack}`);
-  server.close();
+udpServer.on('error', (err) => {
+  console.log(`udpServer error:\n${err.stack}`);
+  udpServer.close();
 });
 
 var PORT = 11000;
 var HOST = '192.168.1.70';
 
-server.on('listening', function () {
-    var address = server.address();
-    console.log('UDP Server listening on ' + address.address + ":" + address.port);
+udpServer.on('listening', function () {
+    var address = udpServer.address();
+    console.log('UDP udpServer listening on ' + address.address + ":" + address.port);
 });
 
-server.on('message', function (message, remote) {
+udpServer.on('message', function (message, remote) {
     console.log(remote.address + ':' + remote.port +' - ' + message + message.length);
 	if(message.length != 24)
 		return;
@@ -33,4 +33,4 @@ server.on('message', function (message, remote) {
 	console.log(rx,ry,rz,state,x,y);
 });
 
-server.bind(PORT, HOST);
+udpServer.bind(PORT, HOST);
