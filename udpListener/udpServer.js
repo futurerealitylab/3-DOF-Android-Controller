@@ -14,6 +14,14 @@ udpServer.on('listening', function () {
     console.log('UDP udpServer listening on ' + address.address + ":" + address.port);
 });
 
+//
+// Summary:
+//   Began = 1,  A finger touched the screen.
+//   Moved = 2,   A finger moved on the screen.
+//   Stationary = 3,  A finger is touching the screen but hasn't moved.
+//  Ended = 4,   A finger was lifted from the screen. This is the final phase of a touch.
+//  Canceled = 5   The system cancelled tracking for the touch.
+
 udpServer.on('message', function (message, remote) {
     console.log(remote.address + ':' + remote.port +' - ' + message + message.length);
 	if(message.length != 24)
