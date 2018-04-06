@@ -13,26 +13,34 @@ public class UdpSender : MonoBehaviour {
 
     public GyroToRotation gtr;
 
-    public string host;
+    //public string host;
     public int port;
 
-    // Use this for initialization
-    void Start () {
-        // This constructor arbitrarily assigns the local port number.
-        udpClient = new UdpClient(port);
+    bool isConnect;
+    public UnityEngine.UI.InputField ipaddress;
+
+    public void connect()
+    {
         try
         {
-            udpClient.Connect(host, port);
+            udpClient.Connect(ipaddress.text, port);
             // Sends a message to the host to which you have connected.
             Byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there?");
-
+            print("connected");
             udpClient.Send(sendBytes, sendBytes.Length);
-
+            isConnect = true;
         }
         catch (Exception e)
         {
             print(e.ToString());
         }
+    }
+
+    // Use this for initialization
+    void Start () {
+        // This constructor arbitrarily assigns the local port number.
+        udpClient = new UdpClient();
+        isConnect = false;
     }
 
     void receivePackets()
@@ -86,16 +94,14 @@ public class UdpSender : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // send [rx,ry,rz,bool,x,y]
-
-
-        // Sends a message to the host to which you have connected.
-        Vector2 touchpos = Input.touchCount > 0 ? Input.touches[0].position : new Vector2(0, 0);
-        int state = Input.touchCount > 0 ? (Input.touches[0].phase - TouchPhase.Began + 1) : 0;
-        Byte[] packet = encodePacket(gtr.RotationRate, touchpos, state);
-        udpClient.Send(packet, packet.Length);
-
-        //receivePackets();
+        if (isConnect)
+        {
+            // send [rx,ry,rz,state,x,y]
+            Vector2 touchpos = Input.touchCount > 0 ? Input.touches[0].position : new Vector2(0, 0);
+            int state = Input.touchCount > 0 ? (Input.touches[0].phase - TouchPhase.Began + 1) : 0;
+            Byte[] packet = encodePacket(gtr.RotationRate, touchpos, state);
+            udpClient.Send(packet, packet.Length);
+        }
     }
 
     void OnApplicationQuit()
