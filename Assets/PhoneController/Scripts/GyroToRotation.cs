@@ -3,7 +3,7 @@
 public class GyroToRotation: MonoBehaviour
 {
     public GameObject rotationIndicater;
-    Vector3 rotationRate = new Vector3(0, 0, 0);
+    public Vector3 rotationRate = new Vector3(0, 0, 0);
     public UnityEngine.Vector3 RotationRate
     {
         get { return rotationRate; }
