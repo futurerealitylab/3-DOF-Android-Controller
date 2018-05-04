@@ -31,6 +31,7 @@ public class UdpClient : MonoBehaviour
      
     public void InitSocket()
     {
+        isConnect = false;
         //
         ipEnd = new IPEndPoint(IPAddress.Parse(ipaddress.text), sendingPort);
         //
@@ -42,7 +43,7 @@ public class UdpClient : MonoBehaviour
 
         // 
         SocketSend("Is anybody there?");
-        isConnect = false;
+        
 
         //开启一个线程连接，必须的，否则主线程卡死  
         connectThread = new Thread(new ThreadStart(SocketReceive));
